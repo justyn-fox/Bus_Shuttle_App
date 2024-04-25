@@ -1,0 +1,22 @@
+@using DomainModel
+@model List<Bus>
+
+<h2>All Buses</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Bus ID</th>
+            <th>Bus Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var bus in Model)
+        {
+            <tr>
+                <td>@bus.Id</td>
+                <td>@bus.BusName</td>
+            </tr>
+        }
+    </tbody>
+</table>

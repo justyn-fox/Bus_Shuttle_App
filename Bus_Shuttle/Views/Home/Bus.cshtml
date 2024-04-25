@@ -1,53 +1,29 @@
-@model Bus_Shuttle.Models.BusViewModel
+@model Bus_Shuttle.Models.BusCreateModel
 @{
-    ViewData["Title"] = "Buses";
+    ViewData["Title"] = "Create Bus";
 }
-
-<div class="text-center">
-    <h1 class="display-4">List of Buses Below:</h1>
+<h2>Add new bus</h2>
+<a asp-action="ViewBus" class="button">Back to List</a>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Bus">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="BusName" class="control-label"></label>
+                <input asp-for="BusName" class="form-control" />
+                <span asp-validation-for="BusName" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
 
-@if (Model == null)
-{
-    <p>No bus details to display.</p>
-}
-else
-{
-    <h2>Bus Details</h2>
-    <p><strong>ID:</strong> @Model.Id</p>
-    <p><strong>Name:</strong> @Model.BusName</p>
-}
-
-<hr />
-
-@using (Html.BeginForm("Create", "Bus", FormMethod.Post))
-{
-    <h2>Create Bus</h2>
-    <div class="form-group">
-        @Html.LabelFor(model => model.BusName)
-        @Html.EditorFor(model => model.BusName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.BusName, "", new { @class = "text-danger" })
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-}
-
-<hr />
-
-@using (Html.BeginForm("Edit", "Bus", FormMethod.Post))
-{
-    <h2>Edit Bus</h2>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Id)
-        @Html.DisplayFor(model => model.Id, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.BusName)
-        @Html.EditorFor(model => model.BusName, new { htmlAttributes = new { @class = "form-control" } })
-        @Html.ValidationMessageFor(model => model.BusName, "", new { @class = "text-danger" })
-    </div>
-    <button type="submit" class="btn btn-primary">Save Changes</button>
-}
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -8,6 +8,11 @@ namespace DomainModel
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public Driver()
+        {
+
+        }
+
         public Driver(int id, string firstName, string lastName)
         {
             Id = id;

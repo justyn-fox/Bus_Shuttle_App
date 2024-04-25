@@ -7,12 +7,12 @@ namespace DomainModel
 {
     public class DataContext : DbContext
     {
-        public DbSet<DomainModel.Bus> Buses { get; set; }
-        public DbSet<DomainModel.Driver> Drivers { get; set; }
-        public DbSet<DomainModel.Entry> BusEntries { get; set; }
-        public DbSet<DomainModel.Loop> Loops { get; set; }
-        public DbSet<DomainModel.Route> Routes { get; set; }
-        public DbSet<DomainModel.Stop> Stops { get; set; }
+        public DbSet<Bus> Buses { get; set; }
+        public DbSet<Driver> Drivers { get; set; }
+        public DbSet<Entry> BusEntries { get; set; }
+        public DbSet<Loop> Loops { get; set; }
+        public DbSet<Route> Routes { get; set; }
+        public DbSet<Stop> Stops { get; set; }
 
         public string DbPath { get; }
 

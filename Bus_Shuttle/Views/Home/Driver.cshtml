@@ -1,7 +1,33 @@
+@model Bus_Shuttle.Models.DriverCreateModel
 @{
-    ViewData["Title"] = "Drivers";
+    ViewData["Title"] = "Create Driver";
 }
+<h2>Add new driver</h2>
+<a asp-action="ViewDriver" class="button">Back to List</a>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Driver">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
 
-<div class="text-center">
-    <h1 class="display-4">List of Drivers Below:</h1>
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

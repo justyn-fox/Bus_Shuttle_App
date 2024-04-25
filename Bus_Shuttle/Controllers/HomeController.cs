@@ -12,12 +12,14 @@ namespace Bus_Shuttle.Services;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    BusService busService;
+    IBusService busService;
+    IDriverService driverService;
 
-    public HomeController(ILogger<HomeController> logger, BusService busService)
+    public HomeController(ILogger<HomeController> logger, IBusService busService, IDriverService driverService)
     {
         _logger = logger;
-        this.BusService = busService;
+        this.busService = busService;
+        this.driverService = driverService;
     }
 
     public IActionResult Index()
@@ -25,36 +27,47 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpPost]
     [Authorize(Policy = "ManagerRequired")]
-    public IActionResult CreateBus(int id, [Bind("BusName")] BusCreateModel model)
-    {
-        busService.CreateBus(id, model.BusName);
-        return RedirectToAction("Bus");
-    }
-
-    [HttpPost]
-    [Authorize(Policy = "ManagerRequired")]
-    public IActionResult EditBus(BusEditModel model)
-    {
-        if (ModelState.IsValid)
-        {
-            return View();
-
-        }
-        return View(model);
-    }
-
-    [Authorize(Policy = "DriverRequired")]
     public IActionResult Bus()
     {
-        return View();
+        var busCreateModel = BusCreateModel.NewBus(busService.GetAmountOfBusses());
+        return View(busCreateModel);
     }
+
+    [HttpPost]
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Bus(int id, [Bind("BusName")] BusCreateModel model)
+    {
+        busService.CreateBus(id, model.BusName);
+        return RedirectToAction("ViewBus");
+    }
+
+    public IActionResult ViewBus()
+    {
+        var buses = busService.getAllBusses();
+        return View(buses);
+    }
+
 
     [Authorize(Policy = "ManagerRequired")]
     public IActionResult Driver()
     {
-        return View();
+        var driverCreateModel = DriverCreateModel.NewDriver(driverService.GetAmountOfDrivers());
+        return View(driverCreateModel);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Driver(int id, [Bind("FirstName,LastName")] DriverCreateModel model)
+    {
+        driverService.CreateDriver(id, model.FirstName, model.LastName);
+        return RedirectToAction("ViewDriver");
+    }
+
+    public IActionResult ViewDriver()
+    {
+        var drivers = driverService.getAllDrivers();
+        return View(drivers);
     }
 
     [Authorize(Policy = "DriverRequired")]
