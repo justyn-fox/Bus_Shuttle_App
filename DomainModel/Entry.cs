@@ -8,5 +8,21 @@ namespace DomainModel
         public DateTime TimeStamp { get; set; }
         public int Boarded { get; set; }
         public int LeftBehind { get; set; }
+
+        public Entry(int id, DateTime timeStamp, int boarded, int leftBehind)
+        {
+            Id = id;
+            TimeStamp = timeStamp;
+            Boarded = boarded;
+            LeftBehind = leftBehind;
+        }
+
+        public Entry(Entry entry)
+        {
+            Id = entry.Id;
+            TimeStamp = entry.TimeStamp;
+            Boarded = entry.Boarded;
+            LeftBehind = entry.LeftBehind;
+        }
     }
 }

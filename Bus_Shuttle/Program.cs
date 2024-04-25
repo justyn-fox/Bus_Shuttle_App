@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Bus_Shuttle.Data;
-using WebIdentity.Data;
+using System.Security.Claims;
+using Bus_Shuttle.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +16,20 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<Bus_Shuttle.Data.ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ManagerRequired", policy =>
+    {
+        policy.RequireRole("Manager");
+    });
+
+    options.AddPolicy("DriverRequired", policy =>
+    {
+        policy.RequireRole("Driver");
+    });
+});
+
+builder.Services.Add<BusService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -33,6 +48,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
