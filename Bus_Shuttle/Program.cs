@@ -32,6 +32,8 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IBusService, BusService>();
 builder.Services.AddScoped<IDriverService, DriverService>();
+builder.Services.AddScoped<ILoopService, LoopService>();
+builder.Services.AddScoped<IStopService, StopService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -6,8 +6,8 @@ namespace Bus_Shuttle.Services
     {
         public void CreateDriver(int id, string firstNameame, string lastNameame);
 
-        public List<Driver> getAllDrivers();
+        public List<Driver> GetAllDrivers();
 
-        public int GetAmountOfDrivers();
+        public int GetNumberOfDrivers();
     }
 }

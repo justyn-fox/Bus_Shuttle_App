@@ -1,0 +1,22 @@
+@using DomainModel
+@model List<Loop>
+
+<h2>All Loops</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Loop ID</th>
+            <th>Loop Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var loop in Model)
+        {
+            <tr>
+                <td>@loop.Id</td>
+                <td>@loop.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -14,12 +14,16 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     IBusService busService;
     IDriverService driverService;
+    ILoopService loopService;
+    IStopService stopService;
 
-    public HomeController(ILogger<HomeController> logger, IBusService busService, IDriverService driverService)
+    public HomeController(ILogger<HomeController> logger, IBusService busService, IDriverService driverService, ILoopService loopService, IStopService stopService)
     {
         _logger = logger;
         this.busService = busService;
         this.driverService = driverService;
+        this.loopService = loopService;
+        this.stopService = stopService;
     }
 
     public IActionResult Index()
@@ -30,7 +34,7 @@ public class HomeController : Controller
     [Authorize(Policy = "ManagerRequired")]
     public IActionResult Bus()
     {
-        var busCreateModel = BusCreateModel.NewBus(busService.GetAmountOfBusses());
+        var busCreateModel = BusCreateModel.NewBus(busService.GetNumberOfBusses());
         return View(busCreateModel);
     }
 
@@ -44,7 +48,7 @@ public class HomeController : Controller
 
     public IActionResult ViewBus()
     {
-        var buses = busService.getAllBusses();
+        var buses = busService.GetAllBusses();
         return View(buses);
     }
 
@@ -52,7 +56,7 @@ public class HomeController : Controller
     [Authorize(Policy = "ManagerRequired")]
     public IActionResult Driver()
     {
-        var driverCreateModel = DriverCreateModel.NewDriver(driverService.GetAmountOfDrivers());
+        var driverCreateModel = DriverCreateModel.NewDriver(driverService.GetNumberOfDrivers());
         return View(driverCreateModel);
     }
 
@@ -66,8 +70,50 @@ public class HomeController : Controller
 
     public IActionResult ViewDriver()
     {
-        var drivers = driverService.getAllDrivers();
+        var drivers = driverService.GetAllDrivers();
         return View(drivers);
+    }
+
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Loop()
+    {
+        var loopCreateModel = LoopCreateModel.NewLoop(loopService.GetNumberOfLoops());
+        return View(loopCreateModel);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Loop(int id, [Bind("Name")] LoopCreateModel model)
+    {
+        loopService.CreateLoop(id, model.Name);
+        return RedirectToAction("ViewLoop");
+    }
+
+    public IActionResult ViewLoop()
+    {
+        var loops = loopService.GetAllLoops();
+        return View(loops);
+    }
+
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Stop()
+    {
+        var stopCreateModel = StopCreateModel.NewStop(stopService.GetNumberOfStops());
+        return View(stopCreateModel);
+    }
+
+    [HttpPost]
+    [Authorize(Policy = "ManagerRequired")]
+    public IActionResult Stop(int id, [Bind("Name,Latitude,Longitude")] StopCreateModel model)
+    {
+        stopService.CreateStop(id, model.Name, model.Latitude, model.Longitude);
+        return RedirectToAction("ViewStop");
+    }
+
+    public IActionResult ViewStop()
+    {
+        var stops = stopService.GetAllStops();
+        return View(stops);
     }
 
     [Authorize(Policy = "DriverRequired")]
@@ -77,19 +123,7 @@ public class HomeController : Controller
     }
 
     [Authorize(Policy = "ManagerRequired")]
-    public IActionResult Loop()
-    {
-        return View();
-    }
-
-    [Authorize(Policy = "ManagerRequired")]
     public IActionResult Route()
-    {
-        return View();
-    }
-
-    [Authorize(Policy = "ManagerRequired")]
-    public IActionResult Stop()
     {
         return View();
     }

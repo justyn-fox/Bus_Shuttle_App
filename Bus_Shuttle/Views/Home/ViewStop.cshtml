@@ -1,0 +1,26 @@
+@using DomainModel
+@model List<Stop>
+
+<h2>All Stops</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Stop ID</th>
+            <th>Stop Name</th>
+            <th>Stop Latitude</th>
+            <th>Stop Longitude</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var stop in Model)
+        {
+            <tr>
+                <td>@stop.Id</td>
+                <td>@stop.Name</td>
+                <td>@stop.Latitude</td>
+                <td>@stop.Longitude</td>
+            </tr>
+        }
+    </tbody>
+</table>

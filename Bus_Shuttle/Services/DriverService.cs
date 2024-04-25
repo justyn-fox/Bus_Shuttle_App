@@ -14,7 +14,7 @@ namespace Bus_Shuttle.Services
             _context.SaveChanges();
         }
 
-        public List<Driver> getAllDrivers()
+        public List<Driver> GetAllDrivers()
         {
             _context = new DataContext();
             drivers = _context.Drivers
@@ -22,7 +22,7 @@ namespace Bus_Shuttle.Services
             return drivers;
         }
 
-        public int GetAmountOfDrivers()
+        public int GetNumberOfDrivers()
         {
             _context = new DataContext();
             return _context.Drivers.Count();

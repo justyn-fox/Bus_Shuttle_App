@@ -7,6 +7,11 @@ namespace DomainModel
         public int Id { get; set; }
         public string Name { get; set; }
 
+        public Loop()
+        {
+            
+        }
+
         public Loop(int id, string name)
         {
             Id = id;

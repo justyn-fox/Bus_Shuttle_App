@@ -6,8 +6,8 @@ namespace Bus_Shuttle.Services
     {
         public void CreateBus(int id, string name);
 
-        public List<Bus> getAllBusses();
+        public List<Bus> GetAllBusses();
 
-        public int GetAmountOfBusses();
+        public int GetNumberOfBusses();
     }
 }

@@ -1,7 +1,29 @@
+@model Bus_Shuttle.Models.LoopCreateModel
 @{
-    ViewData["Title"] = "Loops";
+    ViewData["Title"] = "Create Loop";
 }
-
-<div class="text-center">
-    <h1 class="display-4">List of Loops Below:</h1>
+<h2>Add new loop</h2>
+<a asp-action="ViewLoop" class="button">Back to List</a>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Loop">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <br>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

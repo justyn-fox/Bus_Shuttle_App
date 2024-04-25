@@ -14,7 +14,7 @@ namespace Bus_Shuttle.Services
             _context.SaveChanges();
         }
 
-        public List<Bus> getAllBusses()
+        public List<Bus> GetAllBusses()
         {
             _context = new DataContext();
             buses = _context.Buses
@@ -22,7 +22,7 @@ namespace Bus_Shuttle.Services
             return buses;
         }
 
-        public int GetAmountOfBusses()
+        public int GetNumberOfBusses()
         {
             _context = new DataContext();
             return _context.Buses.Count();
